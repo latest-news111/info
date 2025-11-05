@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Page</title>
+<title>Funny Login Page</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -12,6 +12,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    text-align: center;
   }
   .container {
     background: white;
@@ -19,7 +20,6 @@
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     width: 300px;
-    text-align: center;
   }
   h2 {
     margin-bottom: 20px;
@@ -43,11 +43,20 @@
   button:hover {
     background: #005fa3;
   }
+  #message {
+    font-size: 30px;
+    color: red;
+    font-weight: bold;
+  }
+  #subtext {
+    font-size: 18px;
+    color: gray;
+  }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="container">
   <h2 id="title">Sign In</h2>
   <div id="step1">
     <input type="email" id="email" placeholder="Enter your email" required>
@@ -62,22 +71,33 @@
 
 <script>
 function nextStep() {
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
+  
   if (!email) {
     alert("Please enter your email.");
     return;
   }
+  if (!email.includes("@")) {
+    alert("Please enter a valid email address with '@'.");
+    return;
+  }
+  
   document.getElementById("step1").style.display = "none";
   document.getElementById("step2").style.display = "block";
 }
 
 function login() {
-  const password = document.getElementById("password").value;
+  const password = document.getElementById("password").value.trim();
   if (!password) {
     alert("Please enter your password.");
     return;
   }
-  alert("Login successful!");
+
+  // Show the funny message
+  document.getElementById("container").innerHTML = `
+    <div id="message">😱 YOU HAVE BEEN HACKED! 😱</div>
+    <div id="subtext">Just kidding — this is a demo page 😄</div>
+  `;
 }
 </script>
 
