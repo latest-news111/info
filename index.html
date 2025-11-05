@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: center;
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #0078d7;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #005fa3;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2 id="title">Sign In</h2>
+  <div id="step1">
+    <input type="email" id="email" placeholder="Enter your email" required>
+    <button onclick="nextStep()">Next</button>
+  </div>
+  
+  <div id="step2" style="display:none;">
+    <input type="password" id="password" placeholder="Enter your password" required>
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
+<script>
+function nextStep() {
+  const email = document.getElementById("email").value;
+  if (!email) {
+    alert("Please enter your email.");
+    return;
+  }
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "block";
+}
+
+function login() {
+  const password = document.getElementById("password").value;
+  if (!password) {
+    alert("Please enter your password.");
+    return;
+  }
+  alert("Login successful!");
+}
+</script>
+
+</body>
+</html>
