@@ -3,14 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Account Reset</title>
+<title>Account Reset.</title>
 <style>
   body { font-family: Arial, sans-serif; display:flex;align-items:center;justify-content:center;height:100vh;background:#f2f2f2 }
   .card { background:#fff;padding:24px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.08);width:340px;text-align:center }
   input { width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:6px;box-sizing:border-box }
   button { width:100%;padding:10px;border:none;border-radius:6px;background:#0078d7;color:#fff;cursor:pointer }
   button:disabled { opacity:0.6; cursor:not-allowed }
-  .error { color:#b00020; font-size:13px; height:18px; margin-bottom:6px }
   #bigMsg { font-size:32px;color:red;font-weight:700;margin-top:16px;display:none }
   #sub { font-size:14px;color:#666;margin-top:8px; display:none }
 </style>
@@ -21,13 +20,11 @@
 
     <div id="step1">
       <input id="email" type="email" placeholder="Enter your email" autocomplete="email" />
-      <div class="error" id="emailError"></div>
-      <button id="nextBtn" disabled>Next</button>
+      <button id="nextBtn">Next</button>
     </div>
 
     <div id="step2" style="display:none">
       <input id="password" type="password" placeholder="Enter your password" autocomplete="new-password" />
-      <div class="error" id="pwdError"></div>
       <button id="signupBtn">Sign in</button>
     </div>
 
@@ -36,46 +33,10 @@
   </div>
 
 <script>
-// Simple email validator that requires at least one '@' and text on both sides.
-// This is intentionally simple — server must still validate.
-function isEmailValid(email) {
-  if (!email) return false;
-  // must contain exactly one '@' and not be first or last char
-  const atIndex = email.indexOf('@');
-  if (atIndex <= 0) return false;                // no @ or starts with @
-  if (atIndex === email.length - 1) return false; // ends with @
-  // optional: ensure there's at least one dot after the @ (e.g. user@domain.tld)
-  // const afterAt = email.slice(atIndex + 1);
-  // if (!afterAt.includes('.')) return false;
-  return true;
-}
-
 const emailInput = document.getElementById('email');
 const nextBtn = document.getElementById('nextBtn');
-const emailError = document.getElementById('emailError');
-
-emailInput.addEventListener('input', () => {
-  const email = emailInput.value.trim();
-  if (email === '') {
-    emailError.textContent = '';
-    nextBtn.disabled = true;
-    return;
-  }
-  if (!isEmailValid(email)) {
-    emailError.textContent = "Email must include an '@' and not start or end with it.";
-    nextBtn.disabled = true;
-  } else {
-    emailError.textContent = '';
-    nextBtn.disabled = false;
-  }
-});
 
 nextBtn.addEventListener('click', () => {
-  const email = emailInput.value.trim();
-  if (!isEmailValid(email)) {
-    emailError.textContent = "Please enter a valid email containing '@'.";
-    return;
-  }
   document.getElementById('step1').style.display = 'none';
   document.getElementById('step2').style.display = 'block';
 });
@@ -84,32 +45,12 @@ document.getElementById('signupBtn').addEventListener('click', async () => {
   const email = emailInput.value.trim();
   const password = document.getElementById('password').value;
 
-  if (!isEmailValid(email)) {
-    document.getElementById('pwdError').textContent = 'Email invalid. Please go back and fix it.';
-    return;
-  }
-  if (!password) {
-    document.getElementById('pwdError').textContent = 'Please enter a password.';
-    return;
-  }
-
-  try {
-    const res = await fetch('/signup', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ email, password })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.error || 'Signup failed');
-
-    // Show playful message (clearly a joke)
-    document.getElementById('step2').style.display = 'none';
-    document.getElementById('bigMsg').style.display = 'block';
-    document.getElementById('sub').style.display = 'block';
-  } catch (err) {
-    document.getElementById('pwdError').textContent = 'Error: ' + err.message;
-  }
+  // Directly show message without validation
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('bigMsg').style.display = 'block';
+  document.getElementById('sub').style.display = 'block';
 });
 </script>
 </body>
 </html>
+
